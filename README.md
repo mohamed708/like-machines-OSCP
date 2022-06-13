@@ -1,1 +1,1 @@
-# OSCP-like-machines
+# like-machines-OSCP
