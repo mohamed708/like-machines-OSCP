@@ -32,14 +32,14 @@ Enum4linux 10.10.10.100
 I found 
 
  Sharename       Type      Comment
-  ---------              ----          -------
-        ADMIN$         Disk      Remote Admin
-        C$                    Disk      Default share
-        IPC$                 IPC       Remote IPC
-        NETLOGON    Disk      Logon server share 
-        Replication     Disk      
-        SYSVOL            Disk     Logon server share 
-        Users                Disk      
+  ---------      ----      -------
+  ADMIN$         Disk      Remote Admin
+  C$             Disk      Default share
+  IPC$           IPC       Remote IPC
+  NETLOGON       Disk      Logon server share 
+  Replication    Disk      
+  SYSVOL         Disk      Logon server share 
+  Users          Disk      
 Reconnecting with SMB1 for workgroup listing.
 Unable to connect with SMB1 -- no workgroup available
 
@@ -49,7 +49,7 @@ Unable to connect with SMB1 -- no workgroup available
 Smbclient //10.10.10.100/Replication 
 Password : no-password
 
-I found file called Groups.xml at "active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups"
+I found file called Groups.xml in "active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups"
 
 Download this file in attacker machine
 
