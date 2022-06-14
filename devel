@@ -1,11 +1,5 @@
 Scanning 
 
-
-
-	
-	
-	
-
 nmap -A ip_machine
 
 Option -A enable :
