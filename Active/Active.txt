@@ -1,7 +1,16 @@
 Step 1
 
 Scanning
+
 Nmap -A 10.10.10.100
+
+Option -A enable :
+
+	- version detection
+	- OS detection
+	- script scanning
+	- traceroute
+-------------------------------------------------------------------------------------
 
 PORT      STATE SERVICE       VERSION
 88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-06-14 02:15:23Z)
