@@ -50,7 +50,8 @@ Step 3
 	
 Privilege Escalation 
 	- Search windows/local in metasploit >> search windows/local 
-	- You can use post/multi/recon/local_exploit_suggester
+	- You can use sherlock.ps1 script and use post/multi/recon/local_exploit_suggester in metasploit 
+	- Notice run sherlock.ps1 in Bastard machine
 	- I used this exploit "exploit/windows/local/ms16_014_wmi_recv_notif" and set lhost and session
 
 Now I have a session as Administrator
